@@ -1,0 +1,165 @@
+:root {
+  --sidebar-bg: #1e1e2f;
+  --sidebar-hover: #27273f;
+  --main-bg: #111418;
+  --card-bg: #1f1f2f;
+  --card-hover-bg: #27273f;
+  --card-shadow: rgba(0, 0, 0, 0.3);
+  --accent-color: #1173d4;
+  --text-color: #f0f0f0;
+  --text-light: #ffffff;
+  --btn-bg: #1173d4;
+  --btn-hover: #0e5bbd;
+}
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+}
+
+.sidebar {
+  width: 220px;
+  background-color: var(--sidebar-bg);
+  color: var(--text-light);
+  padding: 20px;
+  position: fixed;
+  height: 100vh;
+  transition: all 0.3s ease;
+}
+
+.sidebar:hover {
+  background-color: var(--sidebar-hover);
+}
+
+.settings-page {
+  margin-left: 220px;
+  padding: 40px 20px;
+  flex: 1;
+  background-color: var(--main-bg);
+  color: var(--text-color);
+  min-height: 100vh;
+  animation: fadeInPage 0.8s ease forwards;
+}
+
+.settings-page h1 {
+  margin-bottom: 25px;
+  color: var(--accent-color);
+}
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+.settings-section {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: slideUpCard 0.6s ease forwards;
+}
+
+.settings-section:hover {
+  background-color: var(--card-hover-bg);
+}
+
+.settings-section h2 {
+  margin-bottom: 10px;
+  color: var(--accent-color);
+  font-size: 1.2rem;
+}
+
+.settings-section p {
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: fadeInInput 0.5s ease forwards;
+  animation-delay: 0.3s;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group select {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  background-color: #2a2a3c;
+  color: var(--text-color);
+}
+
+.checkbox input {
+  margin-right: 10px;
+}
+
+.btn.save {
+  background-color: var(--btn-bg);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+  margin-top: auto;
+}
+
+.btn.save:hover {
+  background-color: var(--btn-hover);
+  transform: translateY(-2px);
+}
+
+.link-item {
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #333;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: slideInLink 0.5s ease forwards;
+  animation-delay: 0.3s;
+}
+
+.chevron {
+  font-size: 18px;
+  color: var(--accent-color);
+}
+
+/* Animations */
+@keyframes fadeInPage {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUpCard {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInInput {
+  0% { opacity: 0; transform: translateX(-20px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInLink {
+  0% { opacity: 0; transform: translateX(-20px); }
+  100% { opacity: 1; transform: translateX(0); }
+}

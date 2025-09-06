@@ -25,7 +25,6 @@ const Sidebar = () => {
   const navItems = [
     { name: "Dashboard", path: "/dashboard" },
     { name: "Subscriptions", path: "/subscriptions" },
-    { name: "Reports", path: "/reports" },
     { name: "Settings", path: "/settings" },
   ];
 
