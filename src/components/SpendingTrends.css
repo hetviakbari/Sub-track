@@ -1,0 +1,39 @@
+.spending-trends {
+  background-color: #1e293b;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.6);
+}
+
+.spending-trends .title {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+
+.spending-trends .amount {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #818cf8;
+}
+
+.spending-trends .percent {
+  font-size: 0.875rem;
+  color: #22c55e;
+}
+
+.spending-trends .subtitle {
+  color: #9ca3af;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.chart-placeholder {
+  height: 10rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  border: 1px solid #374151;
+  border-radius: 0.5rem;
+}
