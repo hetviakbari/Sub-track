@@ -1,18 +1,23 @@
 :root {
   --sidebar-bg: #1e1e2f;       /* dark sidebar */
   --sidebar-hover: #27273f;    /* sidebar hover */
-  --main-bg: #f5f6fa;          /* main background */
-  --card-bg: #ffffff;           /* main card background */
-  --card-hover-bg: #f0f4ff;     /* card hover background */
-  --card-shadow: rgba(0, 0, 0, 0.1);
-  --accent-color: #1173d4;      /* blue accent */
-  --text-color: #333333;
+  --main-bg: #12121c;          /* dark main background */
+  --card-bg: #1f1f2d;          /* dark card background */
+  --card-hover-bg: #2a2a42;    /* card hover background */
+  --card-shadow: rgba(0, 0, 0, 0.5);
+  --accent-color: #1173d4;     /* blue accent */
+  --text-color: #e0e0e0;       /* light text */
   --text-light: #ffffff;
+  --table-border: #444;         /* visible table border */
+  --status-active: #4caf50;    /* green */
+  --status-paused: #ff9800;    /* orange */
+  --status-cancelled: #f44336; /* red */
 }
 
 .app-container {
   display: flex;
   min-height: 100vh;
+  width: 100vw;
   font-family: 'Inter', sans-serif;
 }
 
@@ -36,6 +41,17 @@
   flex: 1;
   background-color: var(--main-bg);
   animation: fadeInContent 0.8s ease forwards;
+  color: var(--text-color);
+}
+
+.subscriptions-header h1 {
+  margin: 0;
+  color: var(--text-light);
+}
+
+.subscriptions-header p {
+  color: #bbbbbb;
+  margin-bottom: 20px;
 }
 
 .subscription-card {
@@ -44,13 +60,15 @@
   gap: 40px;
 }
 
-/* Cards with color and animation */
+/* Card Styling */
 .subscription-details {
   background-color: var(--card-bg);
-  color: var(--text-color);
+  color: var(--text-light);   /* Make all card text light */
   border-radius: 12px;
   padding: 20px;
-  box-shadow: 0 4px 10px var(--card-shadow);
+   background-color: var(--card-hover-bg);
+  flex: 1;
+  min-width: 300px;
   opacity: 0;
   transform: translateY(30px);
   animation: slideUpCard 0.6s ease forwards;
@@ -60,17 +78,54 @@
 .subscription-details:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 20px var(--card-shadow);
-  background-color: var(--card-hover-bg); /* subtle hover color */
+ 
 }
 
 .subscription-details table {
   width: 100%;
   border-collapse: collapse;
+  margin: 15px 0;
+  color: var(--text-light);  /* table text visible */
 }
 
 .subscription-details td {
   padding: 8px 12px;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--table-border); /* visible border */
+}
+
+.actions {
+  margin-top: 15px;
+}
+
+.actions .btn {
+  padding: 6px 12px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--text-light);
+  transition: background 0.3s ease;
+}
+
+.btn.edit { background-color: var(--accent-color); }
+.btn.edit:hover { background-color: #0e5bb5; }
+
+.btn.pause { background-color: var(--status-paused); }
+.btn.pause:hover { background-color: #e68a00; }
+
+.btn.cancel { background-color: var(--status-cancelled); }
+.btn.cancel:hover { background-color: #d32f2f; }
+
+/* Payment History */
+.payment-history {
+  flex: 1;
+  min-width: 250px;
+}
+
+.payment-history h3 {
+  margin-bottom: 10px;
+  color: var(--text-light);
+  
 }
 
 .payment-history ul {
@@ -79,47 +134,37 @@
 }
 
 .payment-history li {
-  background-color: var(--card-bg);
+  background-color: var(--card-hover-bg);
   margin-bottom: 10px;
   padding: 10px 15px;
   border-left: 4px solid var(--accent-color);
   border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-light);  /* ensure text is visible */
   opacity: 0;
   transform: translateX(-20px);
   animation: slideInList 0.5s ease forwards;
   animation-delay: 0.3s;
 }
 
-/* Keyframes */
+.paid {
+  color: var(--status-active);
+  font-weight: 600;
+}
+
+/* Animations */
 @keyframes fadeInContent {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideUpCard {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideInList {
-  0% {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  0% { opacity: 0; transform: translateX(-20px); }
+  100% { opacity: 1; transform: translateX(0); }
 }
