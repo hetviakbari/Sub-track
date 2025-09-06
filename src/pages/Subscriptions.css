@@ -1,0 +1,80 @@
+:root {
+  --sidebar-bg: #1e1e2f;       /* dark sidebar */
+  --sidebar-hover: #27273f;    /* sidebar hover */
+  --main-bg: #f5f6fa;          /* main background */
+  --card-bg: #ffffff;           /* card background */
+  --card-shadow: rgba(0, 0, 0, 0.1); /* card shadow */
+  --accent-color: #1173d4;      /* blue accent */
+  --text-color: #333333;        /* dark text for cards */
+  --text-light: #ffffff;        /* text on dark background */
+}
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+}
+
+.sidebar {
+  width: 220px;
+  background-color: var(--sidebar-bg);
+  color: var(--text-light);
+  padding: 20px;
+  position: fixed;
+  height: 100vh;
+  transition: all 0.3s ease;
+}
+
+.sidebar:hover {
+  background-color: var(--sidebar-hover);
+}
+
+.subscriptions {
+  margin-left: 220px;
+  padding: 40px 20px;
+  flex: 1;
+  background-color: var(--main-bg);
+}
+
+.subscription-card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.subscription-details {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 10px var(--card-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.subscription-details:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px var(--card-shadow);
+}
+
+.subscription-details table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.subscription-details td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.payment-history ul {
+  list-style: none;
+  padding: 0;
+}
+
+.payment-history li {
+  background-color: #f0f4ff;
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  border-left: 4px solid var(--accent-color);
+  border-radius: 6px;
+}

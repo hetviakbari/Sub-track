@@ -36,6 +36,7 @@ const Dashboard = () => {
     <div className="dashboard">
       <Sidebar />
       <main className="main">
+        <Header />
         <p className="overview">
           Overview of your subscriptions and spending.
         </p>
