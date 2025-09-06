@@ -1,56 +1,97 @@
 const Subscription = require('../models/Subcriptiondetails');
 
+
 // @desc    Create new subscription
 // @route   POST /api/subscriptions
-// @access  Public (or Private if you add auth)
+// @access  Public (change later to Private if auth)
 const createSubscription = async (req, res) => {
-    try {
-        const { name, amount, cycle, startDate, notes, category } = req.body;
-        
-        // Validation
-        if (!name || !amount || !cycle || !startDate) {
-            return res.status(400).json({
-                success: false,
-                message: 'Please provide all required fields: name, amount, cycle, and startDate'
-            });
-        }
-        
-        // Create subscription
-        const subscription = await Subscription.create({
-            name: name.trim(),
-            amount: parseFloat(amount),
-            cycle,
-            startDate: new Date(startDate),
-            notes: notes?.trim() || '',
-            category: category || 'Other',
-            // userId: req.user?.id, // Uncomment when you add authentication
-        });
-        
-        res.status(201).json({
-            success: true,
-            message: 'Subscription created successfully',
-            data: subscription
-        });
-        
-    } catch (error) {
-        console.error('Error creating subscription:', error);
-        
-        // Handle validation errors
-        if (error.name === 'ValidationError') {
-            const messages = Object.values(error.errors).map(err => err.message);
-            return res.status(400).json({
-                success: false,
-                message: 'Validation Error',
-                errors: messages
-            });
-        }
-        
-        res.status(500).json({
-            success: false,
-            message: 'Server error occurred while creating subscription'
-        });
+  try {
+    let { name, amount, cycle, startDate, notes, category } = req.body;
+
+    if (!name?.trim() || !amount || !cycle || !startDate) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide all required fields: name, amount, cycle, startDate"
+      });
     }
+
+
+
+    const parsedAmount = parseFloat(amount);
+    if (isNaN(parsedAmount) || parsedAmount <= 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid amount. Must be a positive number."
+      });
+    }
+
+    let parsedStartDate;
+
+
+    if (/^\d{4}-\d{2}-\d{2}$/.test(startDate)) {
+      parsedStartDate = new Date(startDate + "T00:00:00Z"); // normalize
+    } else {
+      parsedStartDate = new Date(startDate);
+    }
+
+    if (isNaN(parsedStartDate.getTime())) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid date format. Please use YYYY-MM-DD or a valid ISO date string."
+      });
+    }
+
+    const allowedCycles = ["Weekly", "Monthly", "Quarterly", "Yearly"];
+    if (!allowedCycles.includes(cycle)) {
+      return res.status(400).json({
+        success: false,
+        message: `Invalid billing cycle. Allowed values: ${allowedCycles.join(", ")}`
+      });
+    }
+    const subscription = new Subscription({
+      name: name.trim(),
+      amount: parsedAmount,
+      cycle,
+      startDate: parsedStartDate,
+      notes: notes?.trim() || "",
+      category: category || "Other"
+
+    });
+
+
+    await subscription.save();
+
+
+    res.status(201).json({
+      success: true,
+      message: "Subscription created successfully",
+      data: subscription
+    });
+
+  } catch (error) {
+    console.error("❌ Error creating subscription:", error);
+
+
+    if (error.name === "ValidationError") {
+      const messages = Object.values(error.errors).map(err => err.message);
+      return res.status(400).json({
+        success: false,
+        message: "Validation error",
+        errors: messages
+      });
+    }
+
+
+    res.status(500).json({
+      success: false,
+      message: "Server error occurred while creating subscription"
+    });
+  }
 };
+
+module.exports = { createSubscription };
+
+
 
 // @desc    Get all subscriptions
 // @route   GET /api/subscriptions

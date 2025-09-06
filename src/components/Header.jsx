@@ -4,24 +4,19 @@ import Button from "./ui/Button";
 import SubscriptionModal from "./SubscriptionModal";
 import "./Header.css";
 
-// API service for subscription operations
+// API service
 const subscriptionService = {
   async createSubscription(subscriptionData) {
     try {
       const response = await fetch('http://localhost:5000/api/subscriptions', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(subscriptionData)
       });
-      
+
       const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to create subscription');
-      }
-      
+      if (!response.ok) throw new Error(data.message || 'Failed to create subscription');
+
       return data;
     } catch (error) {
       console.error('Error creating subscription:', error);
@@ -37,47 +32,29 @@ const Header = ({ onAddSubscription, title = "Dashboard" }) => {
   const handleAddSubscription = async (subscriptionData) => {
     try {
       setIsSubmitting(true);
-      
-      console.log('📝 Submitting subscription data:', subscriptionData);
-      
-      // Save to database via API
-      const response = await subscriptionService.createSubscription({
-        name: subscriptionData.name,
-        amount: subscriptionData.amount,
-        cycle: subscriptionData.cycle,
-        startDate: subscriptionData.startDate,
-        notes: subscriptionData.notes || '',
-        category: subscriptionData.category || 'Other'
-      });
-      
+
+      // Validate startDate
+      const date = new Date(subscriptionData.startDate);
+      if (isNaN(date.getTime())) throw new Error("Invalid start date");
+
+      // Format date as YYYY-MM-DD
+      const formattedData = {
+        ...subscriptionData,
+        startDate: date.toISOString().split('T')[0]
+      };
+
+      console.log('📝 Submitting subscription data:', formattedData);
+
+      const response = await subscriptionService.createSubscription(formattedData);
       console.log('✅ Subscription created successfully:', response.data);
-      
-      // Call parent handler if provided (for UI updates)
-      if (onAddSubscription) {
-        await onAddSubscription(response.data);
-      }
-      
-      // Show success message (optional)
-      if (window.alert) {
-        alert('Subscription added successfully! 🎉');
-      }
-      
-      // Close modal after successful submission
+
+      if (onAddSubscription) await onAddSubscription(response.data);
+      alert('Subscription added successfully! 🎉');
+
       setIsModalOpen(false);
-      
-      // Optionally refresh the page or emit an event to update other components
-      // window.location.reload(); // Uncomment if you want to refresh the page
-      
     } catch (error) {
       console.error('❌ Error adding subscription:', error);
-      
-      // Show error message to user
-      const errorMessage = error.message || 'Failed to add subscription. Please try again.';
-      if (window.alert) {
-        alert(`Error: ${errorMessage}`);
-      }
-      
-      // Modal stays open if there's an error
+      alert(error.message || 'Failed to add subscription. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -88,21 +65,17 @@ const Header = ({ onAddSubscription, title = "Dashboard" }) => {
       <div className="header">
         <h1 className="title">{title}</h1>
         <div className="actions">
-          <Button 
-            onClick={() => setIsModalOpen(true)}
-            disabled={isSubmitting}
-          >
-            <Plus size={18} className="mr-1" /> 
+          <Button onClick={() => setIsModalOpen(true)} disabled={isSubmitting}>
+            <Plus size={18} className="mr-1" />
             {isSubmitting ? 'Adding...' : 'Add Subscription'}
           </Button>
           <Bell className="icon" />
         </div>
       </div>
 
-      {/* Modal */}
       <SubscriptionModal
         isOpen={isModalOpen}
-        onClose={() => !isSubmitting && setIsModalOpen(false)} // Prevent closing while submitting
+        onClose={() => !isSubmitting && setIsModalOpen(false)}
         onSubmit={handleAddSubscription}
         isLoading={isSubmitting}
       />

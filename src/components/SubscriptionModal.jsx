@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './SubscriptionModal.css';
 
-const SubscriptionModal = ({ isOpen, onClose, onSubmit }) => {
+const SubscriptionModal = ({ isOpen, onClose, onSubmit, isLoading }) => {
   const [formData, setFormData] = useState({
     name: '',
     amount: '',
@@ -11,80 +11,58 @@ const SubscriptionModal = ({ isOpen, onClose, onSubmit }) => {
   });
 
   const [errors, setErrors] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
 
   const validateForm = () => {
     const newErrors = {};
     
-    if (!formData.name.trim()) {
-      newErrors.name = 'Subscription name is required';
-    }
+    if (!formData.name.trim()) newErrors.name = 'Subscription name is required';
     
-    if (!formData.amount || parseFloat(formData.amount) <= 0) {
-      newErrors.amount = 'Please enter a valid amount';
-    }
+    if (!formData.amount || parseFloat(formData.amount) <= 0) newErrors.amount = 'Please enter a valid amount';
     
-    if (!formData.startDate) {
-      newErrors.startDate = 'Start date is required';
+    if (!formData.startDate) newErrors.startDate = 'Start date is required';
+    else {
+      const dateCheck = new Date(formData.startDate);
+      if (isNaN(dateCheck.getTime())) newErrors.startDate = 'Invalid date';
     }
-    
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     if (!validateForm()) return;
-    
-    setIsLoading(true);
-    
-    try {
-      await onSubmit({
-        ...formData,
-        amount: parseFloat(formData.amount),
-        id: Date.now(), // Simple ID generation
-        createdAt: new Date().toISOString()
-      });
-      
-      // Reset form
-      setFormData({
-        name: '',
-        amount: '',
-        cycle: 'Monthly',
-        startDate: '',
-        notes: ''
-      });
-      setErrors({});
-      onClose();
-    } catch (error) {
-      console.error('Error adding subscription:', error);
-    } finally {
-      setIsLoading(false);
-    }
+
+    await onSubmit({
+      ...formData,
+      amount: parseFloat(formData.amount),
+      id: Date.now(),
+      createdAt: new Date().toISOString()
+    });
+
+    // Reset form after successful submission
+    setFormData({
+      name: '',
+      amount: '',
+      cycle: 'Monthly',
+      startDate: '',
+      notes: ''
+    });
+    setErrors({});
+    onClose();
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-    
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: ''
-      }));
-    }
+    setFormData(prev => ({ ...prev, [name]: value }));
+    if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
   };
 
   if (!isOpen) return null;
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-content" onClick={e => e.stopPropagation()}>
         <div className="modal-header">
           <h2>Add a New Subscription</h2>
           <p>Enter the details below to start tracking your subscription.</p>
@@ -167,20 +145,11 @@ const SubscriptionModal = ({ isOpen, onClose, onSubmit }) => {
           </div>
 
           <div className="form-actions">
-            <button
-              type="button"
-              onClick={onClose}
-              className="btn-cancel"
-              disabled={loading}
-            >
+            <button type="button" onClick={onClose} className="btn-cancel" disabled={isLoading}>
               Cancel
             </button>
-            <button
-              type="submit"
-              className="btn-submit"
-              disabled={loading}
-            >
-              {loading ? 'Adding...' : 'Add Subscription'}
+            <button type="submit" className="btn-submit" disabled={isLoading}>
+              {isLoading ? 'Adding...' : 'Add Subscription'}
             </button>
           </div>
         </form>

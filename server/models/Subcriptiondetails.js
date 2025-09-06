@@ -50,7 +50,7 @@ const subscriptionSchema = new mongoose.Schema({
     // Auto-calculated next billing date
     nextBillingDate: {
         type: Date,
-        required: true
+        required: false
     },
     
     // Notes (from your modal)
