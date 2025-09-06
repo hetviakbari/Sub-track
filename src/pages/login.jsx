@@ -29,6 +29,9 @@ const Login = () => {
 
       if (response.ok) {
         localStorage.setItem("token", data.token);
+        if (data.user) {
+            localStorage.setItem("user", JSON.stringify(data.user));
+        }
         alert(`Logged in successfully as ${data.user.email}`);
         navigate("/dashboard");
       } else {
