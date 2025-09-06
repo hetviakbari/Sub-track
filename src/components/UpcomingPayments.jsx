@@ -1,22 +1,22 @@
 import React from "react";
+import "./UpcomingPayments.css";
 
 const UpcomingPayments = ({ subscriptions }) => {
   return (
-    <div>
-      <h2 className="text-lg font-semibold mb-4">Upcoming Payments</h2>
-      <div className="grid grid-cols-4 gap-4 mb-8">
+    <div className="upcoming-payments">
+      <h3 className="title">Upcoming Payments</h3>
+      <div className="cards">
         {subscriptions.map((sub) => (
-          <div
-            key={sub._id}
-            className="bg-[#1e293b] p-5 rounded-2xl shadow-lg hover:scale-105 transition-transform"
-          >
-            <p className="font-semibold text-lg">{sub.name}</p>
-            <p className="text-gray-400 text-sm">Due in {sub.dueIn} days</p>
-            <p className="text-indigo-400 mt-3 font-bold text-xl">${sub.price}</p>
+          <div key={sub.id || sub._id} className="card">
+            <h4 className="name">{sub.name}</h4>
+            <p className="due">Due on: {sub.renewalDate || sub.nextPayment}</p>
+            <p className="amount">${sub.price}</p>
           </div>
         ))}
-        <div className="bg-[#1e293b] p-5 rounded-2xl shadow-lg flex items-center justify-center hover:bg-indigo-500 hover:text-white cursor-pointer">
-          + Add New
+
+        {/* Add new button card */}
+        <div className="card add-card">
+          <button className="add-btn">+ Add New</button>
         </div>
       </div>
     </div>

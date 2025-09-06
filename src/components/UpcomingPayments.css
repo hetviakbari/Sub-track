@@ -1,0 +1,65 @@
+.upcoming-payments {
+  margin-bottom: 2rem;
+}
+
+.upcoming-payments .title {
+  font-weight: 600;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  background-color: #1e293b;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 0 8px rgba(0,0,0,0.5);
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.card .name {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.card .due {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  margin-bottom: 0.5rem;
+}
+
+.card .amount {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #818cf8;
+}
+
+.add-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-btn {
+  background: transparent;
+  border: 2px dashed #6366f1;
+  color: #6366f1;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.add-btn:hover {
+  background-color: rgba(99, 102, 241, 0.1);
+}

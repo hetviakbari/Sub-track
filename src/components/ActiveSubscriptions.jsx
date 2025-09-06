@@ -1,13 +1,14 @@
 import React from "react";
+import "./ActiveSubscriptions.css";
 
 const ActiveSubscriptions = ({ subscriptions }) => {
   return (
-    <div className="bg-[#1e293b] p-6 rounded-2xl shadow-lg">
-      <h3 className="font-semibold mb-4 text-xl">Active Subscriptions</h3>
-      <table className="w-full text-sm">
-        <thead className="text-gray-400 text-left">
+    <div className="active-subscriptions">
+      <h3 className="title">Active Subscriptions</h3>
+      <table>
+        <thead>
           <tr>
-            <th className="pb-2">Name</th>
+            <th>Name</th>
             <th>Category</th>
             <th>Billing</th>
             <th>Next Payment</th>
@@ -16,12 +17,12 @@ const ActiveSubscriptions = ({ subscriptions }) => {
         </thead>
         <tbody>
           {subscriptions.map((sub) => (
-            <tr key={sub._id} className="border-t border-gray-700 hover:bg-[#27304a] transition">
+            <tr key={sub._id || sub.id}>
               <td>{sub.name}</td>
               <td>{sub.category}</td>
-              <td>{sub.billingCycle}</td>
-              <td>{sub.nextPayment}</td>
-              <td className="text-indigo-400 font-medium">${sub.price}</td>
+              <td>{sub.billingCycle || "N/A"}</td>
+              <td>{sub.nextPayment || sub.renewalDate}</td>
+              <td className="amount">${sub.price}</td>
             </tr>
           ))}
         </tbody>
