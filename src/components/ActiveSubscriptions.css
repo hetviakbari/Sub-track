@@ -1,42 +1,53 @@
-.active-subscriptions {
+.card {
   background-color: #1e293b;
-  padding: 1.5rem;
-  border-radius: 1rem;
-  box-shadow: 0 0 10px rgba(0,0,0,0.6);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 }
 
-.active-subscriptions .title {
-  font-weight: 600;
-  margin-bottom: 1rem;
+.card-title {
   font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #f1f5f9;
 }
 
-.active-subscriptions table {
-  width: 100%;
-  font-size: 0.875rem;
-  border-collapse: collapse;
+.subscription-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.active-subscriptions th {
-  text-align: left;
-  color: #9ca3af;
-  padding-bottom: 0.5rem;
-}
-
-.active-subscriptions td {
-  padding: 0.5rem 0;
-}
-
-.active-subscriptions tr {
-  border-top: 1px solid #374151;
-  transition: background 0.3s;
-}
-
-.active-subscriptions tr:hover {
+.subscription-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
   background-color: #27304a;
+  color: #cbd5e1;
+  transition: all 0.3s ease;
 }
 
-.amount {
-  color: #818cf8;
+.subscription-item:hover {
+  background-color: #394566;
+}
+
+.sub-name {
   font-weight: 500;
+}
+
+.sub-amount {
+  font-weight: 600;
+  color: #818cf8;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(20px);}
+  100% { opacity: 1; transform: translateY(0);}
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.8s ease forwards;
 }

@@ -11,38 +11,41 @@ const Dashboard = () => {
   const [subscriptions, setSubscriptions] = useState([]);
 
   useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const res = await axios.get("http://localhost:5000/api/subscriptions", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+    const fetchData = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/subscriptions", {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        });
 
-      setSubscriptions(
-        Array.isArray(res.data) ? res.data : res.data.subscriptions || []
-      );
-    } catch (err) {
-      console.error("Backend not connected. Using dummy data...", err);
+        const subs = res.data.data.map((sub) => ({
+          ...sub,
+          price: sub.amount.toFixed(2),
+          nextPayment: new Date(sub.nextBillingDate).toLocaleDateString(),
+          billingCycle: sub.cycle,
+        }));
 
-      setSubscriptions([
-        { id: 1, name: "Netflix", price: 500, category: "Entertainment", renewalDate: "2025-09-10" },
-        { id: 2, name: "Spotify", price: 119, category: "Music", renewalDate: "2025-09-15" },
-        { id: 3, name: "Adobe Creative Cloud", price: 2000, category: "Productivity", renewalDate: "2025-09-20" },
-        { id: 4, name: "YouTube Premium", price: 129, category: "Entertainment", renewalDate: "2025-09-25" },
-      ]);
-    }
-  };
+        setSubscriptions(subs);
+      } catch (err) {
+        console.error("Backend not connected. Using dummy data...", err);
 
-  fetchData();
-}, []);
+        setSubscriptions([
+          { _id: 1, name: "Netflix", price: 500, category: "Entertainment", startDate: "2025-09-10", billingCycle: "Monthly", nextPayment: "2025-09-10" },
+          { _id: 2, name: "Spotify", price: 119, category: "Music", startDate: "2025-09-15", billingCycle: "Monthly", nextPayment: "2025-09-15" },
+          { _id: 3, name: "Adobe CC", price: 2000, category: "Productivity", startDate: "2025-09-20", billingCycle: "Yearly", nextPayment: "2025-09-20" },
+          { _id: 4, name: "YouTube Premium", price: 129, category: "Entertainment", startDate: "2025-09-25", billingCycle: "Monthly", nextPayment: "2025-09-25" },
+        ]);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="dashboard">
       <Sidebar />
       <main className="main">
         <Header />
-        <p className="overview">
-          Overview of your subscriptions and spending.
-        </p>
+        <p className="overview">Overview of your subscriptions and spending.</p>
 
         <UpcomingPayments subscriptions={subscriptions.slice(0, 3)} />
 

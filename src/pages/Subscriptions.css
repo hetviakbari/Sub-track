@@ -1,17 +1,17 @@
 :root {
-  --sidebar-bg: #1e1e2f;       /* dark sidebar */
-  --sidebar-hover: #27273f;    /* sidebar hover */
-  --main-bg: #12121c;          /* dark main background */
-  --card-bg: #1f1f2d;          /* dark card background */
-  --card-hover-bg: #2a2a42;    /* card hover background */
+  --sidebar-bg: #1e1e2f;
+  --sidebar-hover: #27273f;
+  --main-bg: #12121c;
+  --card-bg: #1f1f2d;
+  --card-hover-bg: #2a2a42;
   --card-shadow: rgba(0, 0, 0, 0.5);
-  --accent-color: #1173d4;     /* blue accent */
-  --text-color: #e0e0e0;       /* light text */
+  --accent-color: #1173d4;
+  --text-color: #e0e0e0;
   --text-light: #ffffff;
-  --table-border: #444;         /* visible table border */
-  --status-active: #4caf50;    /* green */
-  --status-paused: #ff9800;    /* orange */
-  --status-cancelled: #f44336; /* red */
+  --table-border: #444;
+  --status-active: #4caf50;
+  --status-paused: #ff9800;
+  --status-cancelled: #f44336;
 }
 
 .app-container {
@@ -40,7 +40,6 @@
   padding: 40px 20px;
   flex: 1;
   background-color: var(--main-bg);
-  animation: fadeInContent 0.8s ease forwards;
   color: var(--text-color);
 }
 
@@ -57,40 +56,37 @@
 .subscription-card {
   display: flex;
   flex-wrap: wrap;
-  gap: 40px;
+  gap: 30px;
+  margin-bottom: 30px;
 }
 
-/* Card Styling */
 .subscription-details {
   background-color: var(--card-bg);
-  color: var(--text-light);   /* Make all card text light */
+  color: var(--text-light);
   border-radius: 12px;
   padding: 20px;
-   background-color: var(--card-hover-bg);
   flex: 1;
   min-width: 300px;
-  opacity: 0;
-  transform: translateY(30px);
-  animation: slideUpCard 0.6s ease forwards;
+  box-shadow: 0 4px 10px var(--card-shadow);
   transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
 .subscription-details:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 20px var(--card-shadow);
- 
+  background-color: var(--card-hover-bg);
 }
 
 .subscription-details table {
   width: 100%;
   border-collapse: collapse;
   margin: 15px 0;
-  color: var(--text-light);  /* table text visible */
+  color: var(--text-light);
 }
 
 .subscription-details td {
   padding: 8px 12px;
-  border-bottom: 1px solid var(--table-border); /* visible border */
+  border-bottom: 1px solid var(--table-border);
 }
 
 .actions {
@@ -109,14 +105,11 @@
 
 .btn.edit { background-color: var(--accent-color); }
 .btn.edit:hover { background-color: #0e5bb5; }
-
 .btn.pause { background-color: var(--status-paused); }
 .btn.pause:hover { background-color: #e68a00; }
-
 .btn.cancel { background-color: var(--status-cancelled); }
 .btn.cancel:hover { background-color: #d32f2f; }
 
-/* Payment History */
 .payment-history {
   flex: 1;
   min-width: 250px;
@@ -125,7 +118,6 @@
 .payment-history h3 {
   margin-bottom: 10px;
   color: var(--text-light);
-  
 }
 
 .payment-history ul {
@@ -141,28 +133,16 @@
   border-radius: 6px;
   display: flex;
   justify-content: space-between;
-  color: var(--text-light);  /* ensure text is visible */
+  color: var(--text-light);
+  transition: transform 0.3s ease, opacity 0.3s ease;
   opacity: 0;
   transform: translateX(-20px);
   animation: slideInList 0.5s ease forwards;
-  animation-delay: 0.3s;
+  animation-delay: 0.2s;
 }
 
-.paid {
-  color: var(--status-active);
-  font-weight: 600;
-}
-
-/* Animations */
-@keyframes fadeInContent {
-  0% { opacity: 0; transform: translateY(20px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideUpCard {
-  0% { opacity: 0; transform: translateY(30px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
+.paid { color: var(--status-active); font-weight: 600; }
+.unpaid { color: var(--status-paused); font-weight: 600; }
 
 @keyframes slideInList {
   0% { opacity: 0; transform: translateX(-20px); }
