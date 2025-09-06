@@ -1,0 +1,16 @@
+import React from "react";
+import "./Button.css"; // optional if you want custom styles
+
+const Button = ({ children, onClick, type = "button", className = "" }) => {
+  return (
+    <button
+      type={type}
+      onClick={onClick}
+      className={`btn-primary ${className}`}
+    >
+      {children}
+    </button>
+  );
+};
+
+export default Button;

@@ -1,0 +1,57 @@
+/* Sidebar container */
+aside {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Sidebar links */
+nav a {
+  transition: background-color 0.2s, color 0.2s;
+  cursor: pointer;
+}
+
+/* Active link style */
+nav a.active {
+  background-color: #4f46e5; /* Indigo-600 */
+  color: white;
+}
+
+/* Hover effect */
+nav a:hover {
+  background-color: #1e293b;
+  color: #fff;
+}
+
+/* User info box */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background-color: #1e293b;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* User avatar */
+.user-info img {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  border: 2px solid #6366f1; /* Indigo-500 */
+}
+
+/* User name */
+.user-info p:first-child {
+  font-weight: 600;
+  color: #fff;
+}
+
+/* User email */
+.user-info p:last-child {
+  font-size: 0.75rem;
+  color: #9ca3af; /* Gray-400 */
+  line-height: 1;
+}
