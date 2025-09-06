@@ -2,6 +2,12 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./Sidebar.css";
 
+// Simple email hashing for privacy (keeping your original logic otherwise)
+const hashEmail = (email) => {
+  if (!email) return 'default';
+  return btoa(email).replace(/[^a-zA-Z0-9]/g, '').substring(0, 10);
+};
+
 const Sidebar = () => {
   const [user, setUser] = useState({ name: "User", email: "email@example.com" });
 
@@ -42,7 +48,7 @@ const Sidebar = () => {
 
       <div className="user-info">
         <img
-          src={`https://i.pravatar.cc/40?u=${user.email || "default"}`}
+          src={`https://i.pravatar.cc/40?u=${hashEmail(user.email)}`}
           alt={user.name || "User"}
         />
         <div>

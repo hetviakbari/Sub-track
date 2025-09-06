@@ -2,11 +2,12 @@
   --sidebar-bg: #1e1e2f;       /* dark sidebar */
   --sidebar-hover: #27273f;    /* sidebar hover */
   --main-bg: #f5f6fa;          /* main background */
-  --card-bg: #ffffff;           /* card background */
-  --card-shadow: rgba(0, 0, 0, 0.1); /* card shadow */
+  --card-bg: #ffffff;           /* main card background */
+  --card-hover-bg: #f0f4ff;     /* card hover background */
+  --card-shadow: rgba(0, 0, 0, 0.1);
   --accent-color: #1173d4;      /* blue accent */
-  --text-color: #333333;        /* dark text for cards */
-  --text-light: #ffffff;        /* text on dark background */
+  --text-color: #333333;
+  --text-light: #ffffff;
 }
 
 .app-container {
@@ -34,6 +35,7 @@
   padding: 40px 20px;
   flex: 1;
   background-color: var(--main-bg);
+  animation: fadeInContent 0.8s ease forwards;
 }
 
 .subscription-card {
@@ -42,18 +44,23 @@
   gap: 40px;
 }
 
+/* Cards with color and animation */
 .subscription-details {
   background-color: var(--card-bg);
   color: var(--text-color);
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 4px 10px var(--card-shadow);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: slideUpCard 0.6s ease forwards;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
 .subscription-details:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 20px var(--card-shadow);
+  background-color: var(--card-hover-bg); /* subtle hover color */
 }
 
 .subscription-details table {
@@ -72,9 +79,47 @@
 }
 
 .payment-history li {
-  background-color: #f0f4ff;
+  background-color: var(--card-bg);
   margin-bottom: 10px;
   padding: 10px 15px;
   border-left: 4px solid var(--accent-color);
   border-radius: 6px;
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: slideInList 0.5s ease forwards;
+  animation-delay: 0.3s;
+}
+
+/* Keyframes */
+@keyframes fadeInContent {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUpCard {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInList {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
